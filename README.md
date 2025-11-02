@@ -1,5 +1,7 @@
 # circulator
 
+**⚠️ This is an experimental and educational application for learning purposes. It is not intended for production use.**
+
 Circulator with gRPC and REST API support.
 
 ## Architecture

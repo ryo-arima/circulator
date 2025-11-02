@@ -1,0 +1,59 @@
+version: '3.8'
+
+networks:
+  app:
+    driver: bridge
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: circulator-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: circulator
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app
+
+  redis:
+    image: redis:7-alpine
+    container_name: circulator-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - app
+
+  # Pulsar standalone mode (lightweight for development)
+  pulsar:
+    image: apachepulsar/pulsar:latest
+    container_name: circulator-pulsar
+    hostname: pulsar
+    restart: always
+    networks:
+      - app
+    environment:
+      - PULSAR_MEM=-Xms512m -Xmx512m -XX:MaxDirectMemorySize=256m
+    ports:
+      - "6650:6650"  # Pulsar binary protocol
+      - "8080:8080"  # Pulsar admin REST API
+    volumes:
+      - pulsar_data:/pulsar/data
+    command: bin/pulsar standalone
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/admin/v2/clusters/standalone"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  mysql_data:
+  redis_data:
+  pulsar_data:

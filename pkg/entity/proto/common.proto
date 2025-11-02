@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package stream_manager.v1;
+
+option go_package = "github.com/ryo-arima/circulator/pkg/agent/proto";
+
+// Common message types
+message Empty {}
+
+message User {
+  string id = 1;
+  string email = 2;
+  string created_at = 3;
+  string updated_at = 4;
+}
+
+message TokenPair {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  User user = 1;
+  TokenPair token_pair = 2;
+}
+
+message RefreshTokenRequest {
+  string refresh_token = 1;
+}
+
+message RefreshTokenResponse {
+  TokenPair token_pair = 1;
+}
+
+// Common service for authentication
+service CommonService {
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
+}

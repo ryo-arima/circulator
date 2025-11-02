@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package stream_manager.v1;
+
+option go_package = "github.com/ryo-arima/circulator/pkg/agent/proto";
+
+import "../../proto/google/protobuf/empty.proto";
+
+message Agent {
+  string uuid = 1;
+  string name = 2;
+  string description = 3;
+  string status = 4;
+  string created_at = 5;
+  string updated_at = 6;
+}
+
+message AgentRequest {
+  string uuid = 1;
+  string name = 2;
+  string description = 3;
+}
+
+message AgentListRequest {
+  string filter = 1;
+  int32 limit = 2;
+  int32 offset = 3;
+}
+
+message AgentListResponse {
+  repeated Agent agents = 1;
+  int32 total = 2;
+}
+
+message AgentResponse {
+  Agent agent = 1;
+}
+
+service AgentService {
+  rpc GetAgent(AgentRequest) returns (AgentResponse);
+  rpc ListAgents(AgentListRequest) returns (AgentListResponse);
+  rpc CreateAgent(AgentRequest) returns (AgentResponse);
+  rpc UpdateAgent(AgentRequest) returns (AgentResponse);
+  rpc DeleteAgent(AgentRequest) returns (google.protobuf.Empty);
+  rpc BootstrapAgent(AgentRequest) returns (AgentResponse);
+}

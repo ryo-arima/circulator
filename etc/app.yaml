@@ -1,0 +1,51 @@
+Application:
+  Common:
+    port: "8081"
+  Server:
+    base:
+      emails:
+        - "base@example.com"
+        - "manager@example.com"
+    jwt_secret: "your-secret-key"
+  Client:
+    ServerEndpoint: "http://localhost:8080"
+    UserEmail: "base@example.com"
+  Agent:
+    ServerEndpoint: "http://localhost:8080"
+    LoginEmail: "agent@example.com"
+    LoginPassword: "agent-password"
+    TokenCachePath: "/tmp/circulator-agent-token.cache"
+    RefreshIntervalMinutes: 30
+    RegistrationRetryInterval: 5  # seconds
+    HealthCheckInterval: 60       # seconds
+
+MySQL:
+  host: "localhost"
+  port: "3306"
+  user: "root"
+  password: "password"
+  database: "circulator"
+
+Pulsar:
+  url: "pulsar://localhost:6650"
+  connection_timeout: 10  # seconds
+  operation_timeout: 5    # seconds
+  topics:
+    external_sensor_data: "external-sensor-data"
+    processed_sensor_data: "processed-sensor-data"
+    system_metrics: "system-metrics"
+    alert_data: "alert-data"
+    processing_results: "processing-results"
+  consumer:
+    subscription_name: "agent-processor"
+    type: "Shared"  # Shared, Exclusive, Failover, KeyShared
+  producer:
+    send_timeout: 30  # seconds
+
+Logger:
+  component: "server"  # Will be overridden by component-specific constructors
+  service: "circulator"
+  level: "INFO"        # DEBUG, INFO, WARN, ERROR, FATAL
+  structured: true     # JSON format for fluentd compatibility
+  enable_caller: true  # Include file/line information
+  output: "stdout"     # stdout, stderr, or file path
