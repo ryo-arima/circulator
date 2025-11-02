@@ -1,0 +1,171 @@
+graph TB
+    subgraph "Circulator - Distributed System Architecture"
+        subgraph "Client Layer"
+            CLI[CLI Client]
+            WEB[Web Client]
+            API_CLIENT[API Client]
+        end
+
+        subgraph "Server Layer"
+            subgraph "HTTP API Gateway"
+                REST[REST API Server]
+                GRPC[gRPC Server]
+            end
+            
+            subgraph "Server Instance 1"
+                SC1[Server Controller 1]
+                SU1[Server UseCase 1]
+                SR1[Server Repository 1]
+            end
+            
+            subgraph "Server Instance 2"
+                SC2[Server Controller 2]
+                SU2[Server UseCase 2]
+                SR2[Server Repository 2]
+            end
+        end
+
+        subgraph "Agent Layer"            
+            subgraph "Agent Instance 1"
+                A1[Agent Node 1]
+                AC1[Agent Controller 1]
+                AU1[Agent UseCase 1]
+                AR1[Agent Repository 1]
+                FS1[File System 1]
+            end
+            
+            subgraph "Agent Instance 2"
+                A2[Agent Node 2]
+                AC2[Agent Controller 2]
+                AU2[Agent UseCase 2]
+                AR2[Agent Repository 2]
+                FS2[File System 2]
+            end
+            
+            subgraph "Agent Instance N"
+                AN[Agent Node N]
+                ACN[Agent Controller N]
+                AUN[Agent UseCase N]
+                ARN[Agent Repository N]
+                FSN[File System N]
+            end
+        end
+
+        subgraph "Infrastructure Layer"
+            subgraph "Message Streaming"
+                PULSAR[(Apache Pulsar)]
+                TOPICS[Topics: Commands, Events, Reports, Notifications, Inter-Server]
+            end
+            
+            subgraph "Data Storage"
+                MYSQL[(MySQL Database)]
+                TABLES[Tables: Agents, AgentInfo, SystemInfo, ServerInstances]
+            end
+        end
+
+        subgraph "Configuration and Logging"
+            MCP[MCode System]
+            LOG[Centralized Logging]
+            BASE_CONFIG[BaseConfig DI]
+        end
+    end
+
+    %% Client to Server Communication
+    CLI --> REST
+    WEB --> REST
+    API_CLIENT --> GRPC
+    
+    %% Server Internal Communication (Instance 1)
+    REST --> SC1
+    GRPC --> SC1
+    SC1 --> SU1
+    SU1 --> SR1
+    SR1 --> MYSQL
+    
+    %% Server Internal Communication (Instance 2)
+    REST --> SC2
+    GRPC --> SC2
+    SC2 --> SU2
+    SU2 --> SR2
+    SR2 --> MYSQL
+    
+    %% Agent to Server HTTP Communication
+    A1 --> REST
+    A2 --> REST
+    AN --> REST
+    
+    %% Agent Internal Communication (Instance 1)
+    A1 --> AC1
+    AC1 --> AU1
+    AU1 --> AR1
+    AR1 --> FS1
+    
+    %% Agent Internal Communication (Instance 2)
+    A2 --> AC2
+    AC2 --> AU2
+    AU2 --> AR2
+    AR2 --> FS2
+    
+    %% Agent Internal Communication (Instance N)
+    AN --> ACN
+    ACN --> AUN
+    AUN --> ARN
+    ARN --> FSN
+    
+    %% Server to Pulsar Communication (Publishing)
+    SR1 -.->|Publish Commands| PULSAR
+    SR2 -.->|Publish Commands| PULSAR
+    
+    %% Pulsar to Server Communication (Consuming)
+    PULSAR -.->|Agent Reports| SR1
+    PULSAR -.->|Agent Events| SR2
+    
+    %% Agent to Pulsar Communication (Publishing)
+    AR1 -.->|Publish Reports| PULSAR
+    AR2 -.->|Publish Reports| PULSAR
+    ARN -.->|Publish Reports| PULSAR
+    
+    %% Pulsar to Agent Communication (Consuming)
+    PULSAR -.->|Server Commands| AR1
+    PULSAR -.->|Server Commands| AR2
+    PULSAR -.->|Server Commands| ARN
+    
+    %% Server to Server Communication via Pulsar
+    SR1 -.->|Inter-Server Events| PULSAR
+    SR2 -.->|Inter-Server Events| PULSAR
+    PULSAR -.->|Inter-Server Events| SR1
+    PULSAR -.->|Inter-Server Events| SR2
+    
+    %% Agent to Agent Communication via Pulsar
+    AR1 -.->|Agent Coordination| PULSAR
+    AR2 -.->|Agent Coordination| PULSAR
+    ARN -.->|Agent Coordination| PULSAR
+    PULSAR -.->|Agent Coordination| AR1
+    PULSAR -.->|Agent Coordination| AR2
+    PULSAR -.->|Agent Coordination| ARN
+    
+    %% Configuration and Logging
+    MCP --> LOG
+    BASE_CONFIG --> SC1
+    BASE_CONFIG --> SC2
+    BASE_CONFIG --> AC1
+    BASE_CONFIG --> AC2
+    BASE_CONFIG --> ACN
+    BASE_CONFIG --> SR1
+    BASE_CONFIG --> SR2
+    BASE_CONFIG --> AR1
+    BASE_CONFIG --> AR2
+    BASE_CONFIG --> ARN
+
+    %% Styling
+    classDef clientLayer fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef serverLayer fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef agentLayer fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef infraLayer fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef configLayer fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+
+    class CLI,WEB,API_CLIENT clientLayer
+    class REST,GRPC,SC1,SU1,SR1,SC2,SU2,SR2 serverLayer
+    class A1,A2,AN,AC1,AU1,AR1,AC2,AU2,AR2,ACN,AUN,ARN agentLayer
+    class PULSAR,TOPICS,MYSQL,TABLES,FS1,FS2,FSN infraLayer
+    class MCP,LOG,BASE_CONFIG configLayer
