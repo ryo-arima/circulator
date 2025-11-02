@@ -20,7 +20,7 @@ type IncomingStreamData struct {
 type Command struct {
 	ID        string                 `json:"id"`
 	Type      string                 `json:"type"`
-	Target    string                 `json:"target"`    // "agent", "server", "client"
+	Target    string                 `json:"target"` // "agent", "server", "client"
 	Action    string                 `json:"action"`
 	Payload   map[string]interface{} `json:"payload"`
 	Timestamp time.Time              `json:"timestamp"`

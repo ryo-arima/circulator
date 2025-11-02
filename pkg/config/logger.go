@@ -342,48 +342,48 @@ var (
 
 // Agent Repository API Server codes
 var (
-	ARSINIT   = MCode{"ARS-INIT", "Agent Server API repository initialized"}
-	ARSLOGIN  = MCode{"ARS-LOGIN", "Agent attempting server login"}
-	ARSGINFO  = MCode{"ARS-GINFO", "Agent getting info from server"}
-	ARSSPREP  = MCode{"ARS-SPREP", "Agent sending status report"}
-	ARSGREG   = MCode{"ARS-GREG", "Agent getting registration from server"}
-	ARSSREG   = MCode{"ARS-SREG", "Agent sending registration to server"}
-	ARSSUCC   = MCode{"ARS-SUCC", "Agent Server API operation successful"}
-	ARSERR    = MCode{"ARS-ERR", "Agent Server API operation error"}
+	ARSINIT  = MCode{"ARS-INIT", "Agent Server API repository initialized"}
+	ARSLOGIN = MCode{"ARS-LOGIN", "Agent attempting server login"}
+	ARSGINFO = MCode{"ARS-GINFO", "Agent getting info from server"}
+	ARSSPREP = MCode{"ARS-SPREP", "Agent sending status report"}
+	ARSGREG  = MCode{"ARS-GREG", "Agent getting registration from server"}
+	ARSSREG  = MCode{"ARS-SREG", "Agent sending registration to server"}
+	ARSSUCC  = MCode{"ARS-SUCC", "Agent Server API operation successful"}
+	ARSERR   = MCode{"ARS-ERR", "Agent Server API operation error"}
 )
 
 // Agent Repository Pulsar Producer codes
 var (
-	ARPPINIT  = MCode{"ARPP-INIT", "Agent Pulsar producer initialized"}
-	ARPPUB    = MCode{"ARPP-PUB", "Agent publishing to Pulsar"}
-	ARPREP    = MCode{"ARPP-REP", "Agent publishing report"}
-	ARPNOT    = MCode{"ARPP-NOT", "Agent publishing notification"}
-	ARPCLOSE  = MCode{"ARPP-CLOSE", "Agent Pulsar producer closed"}
-	ARPSUCC   = MCode{"ARPP-SUCC", "Agent Pulsar producer operation successful"}
-	ARPERR    = MCode{"ARPP-ERR", "Agent Pulsar producer operation error"}
+	ARPPINIT = MCode{"ARPP-INIT", "Agent Pulsar producer initialized"}
+	ARPPUB   = MCode{"ARPP-PUB", "Agent publishing to Pulsar"}
+	ARPREP   = MCode{"ARPP-REP", "Agent publishing report"}
+	ARPNOT   = MCode{"ARPP-NOT", "Agent publishing notification"}
+	ARPCLOSE = MCode{"ARPP-CLOSE", "Agent Pulsar producer closed"}
+	ARPSUCC  = MCode{"ARPP-SUCC", "Agent Pulsar producer operation successful"}
+	ARPERR   = MCode{"ARPP-ERR", "Agent Pulsar producer operation error"}
 )
 
 // Agent Repository Pulsar Consumer codes
 var (
-	ARCCINIT  = MCode{"ARCC-INIT", "Agent Pulsar consumer initialized"}
-	ARCCONS   = MCode{"ARCC-CONS", "Agent consuming from Pulsar"}
-	ARCREC    = MCode{"ARCC-REC", "Agent received Pulsar message"}
-	ARCPROC   = MCode{"ARCC-PROC", "Agent processing Pulsar message"}
-	ARCSTOP   = MCode{"ARCC-STOP", "Agent stopping Pulsar consumption"}
-	ARCCLOSE  = MCode{"ARCC-CLOSE", "Agent Pulsar consumer closed"}
-	ARCSUCC   = MCode{"ARCC-SUCC", "Agent Pulsar consumer operation successful"}
-	ARCERR    = MCode{"ARCC-ERR", "Agent Pulsar consumer operation error"}
+	ARCCINIT = MCode{"ARCC-INIT", "Agent Pulsar consumer initialized"}
+	ARCCONS  = MCode{"ARCC-CONS", "Agent consuming from Pulsar"}
+	ARCREC   = MCode{"ARCC-REC", "Agent received Pulsar message"}
+	ARCPROC  = MCode{"ARCC-PROC", "Agent processing Pulsar message"}
+	ARCSTOP  = MCode{"ARCC-STOP", "Agent stopping Pulsar consumption"}
+	ARCCLOSE = MCode{"ARCC-CLOSE", "Agent Pulsar consumer closed"}
+	ARCSUCC  = MCode{"ARCC-SUCC", "Agent Pulsar consumer operation successful"}
+	ARCERR   = MCode{"ARCC-ERR", "Agent Pulsar consumer operation error"}
 )
 
 // Agent Repository Local System codes
 var (
-	ALSINIT   = MCode{"ALS-INIT", "Agent local system repository initialized"}
-	ALSGINFO  = MCode{"ALS-GINFO", "Agent getting system info"}
-	ALSGSTAT  = MCode{"ALS-GSTAT", "Agent getting system status"}
-	ALSGREG   = MCode{"ALS-GREG", "Agent getting registration info"}
-	ALSSREG   = MCode{"ALS-SREG", "Agent storing registration info"}
-	ALSSUCC   = MCode{"ALS-SUCC", "Agent local system operation successful"}
-	ALSERR    = MCode{"ALS-ERR", "Agent local system operation error"}
+	ALSINIT  = MCode{"ALS-INIT", "Agent local system repository initialized"}
+	ALSGINFO = MCode{"ALS-GINFO", "Agent getting system info"}
+	ALSGSTAT = MCode{"ALS-GSTAT", "Agent getting system status"}
+	ALSGREG  = MCode{"ALS-GREG", "Agent getting registration info"}
+	ALSSREG  = MCode{"ALS-SREG", "Agent storing registration info"}
+	ALSSUCC  = MCode{"ALS-SUCC", "Agent local system operation successful"}
+	ALSERR   = MCode{"ALS-ERR", "Agent local system operation error"}
 )
 
 // LogLevel represents the log level

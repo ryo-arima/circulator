@@ -1,15 +1,15 @@
 package local
 
 import (
-"encoding/json"
-"fmt"
-"io/ioutil"
-"os"
-"runtime"
-"time"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"os"
+	"runtime"
+	"time"
 
-"github.com/ryo-arima/circulator/pkg/config"
-"github.com/ryo-arima/circulator/pkg/entity/model"
+	"github.com/ryo-arima/circulator/pkg/config"
+	"github.com/ryo-arima/circulator/pkg/entity/model"
 )
 
 // SystemRepository defines the interface for local system operations from agent
@@ -37,15 +37,15 @@ func NewSystemRepository(c *config.BaseConfig, dataDir string) SystemRepository 
 	// Ensure data directory exists
 	if err := os.MkdirAll(dataDir, 0755); err != nil {
 		c.Logger.ERROR(config.ALSERR, "Failed to create data directory", map[string]interface{}{
-"error":    err.Error(),
+			"error":    err.Error(),
 			"data_dir": dataDir,
 		})
 	}
 
 	c.Logger.DEBUG(config.ALSINIT, "Agent local system repository initialized", map[string]interface{}{
-"data_dir":  dataDir,
-"data_file": repo.dataFilePath,
-})
+		"data_dir":  dataDir,
+		"data_file": repo.dataFilePath,
+	})
 
 	return repo
 }
@@ -57,7 +57,7 @@ func (r *systemRepository) GetSystemInfo() (*model.AgentInfo, error) {
 	hostname, err := os.Hostname()
 	if err != nil {
 		r.config.Logger.ERROR(config.ALSERR, "Failed to get hostname", map[string]interface{}{
-"error": err.Error(),
+			"error": err.Error(),
 		})
 		return nil, err
 	}
@@ -65,24 +65,24 @@ func (r *systemRepository) GetSystemInfo() (*model.AgentInfo, error) {
 	agentInfo := &model.AgentInfo{
 		Hostname:       hostname,
 		IPAddress:      "127.0.0.1", // Simplified, should be actual IP detection
-		Port:           8080,         // Default port, should be configurable
+		Port:           8080,        // Default port, should be configurable
 		ThreadCount:    runtime.NumCPU(),
 		MaxThreadCount: runtime.NumCPU() * 2,
 		Version:        "1.0.0", // Should be from build info
 		Capabilities:   []string{"monitoring", "data_processing", "alerting"},
 		Metadata: map[string]string{
-			"os":           runtime.GOOS,
-			"arch":         runtime.GOARCH,
-			"go_version":   runtime.Version(),
-			"started_at":   time.Now().Format(time.RFC3339),
+			"os":         runtime.GOOS,
+			"arch":       runtime.GOARCH,
+			"go_version": runtime.Version(),
+			"started_at": time.Now().Format(time.RFC3339),
 		},
 	}
 
 	r.config.Logger.DEBUG(config.ALSSUCC, "System information retrieved successfully", map[string]interface{}{
-"hostname":        hostname,
-"thread_count":    agentInfo.ThreadCount,
-"max_threads":     agentInfo.MaxThreadCount,
-})
+		"hostname":     hostname,
+		"thread_count": agentInfo.ThreadCount,
+		"max_threads":  agentInfo.MaxThreadCount,
+	})
 
 	return agentInfo, nil
 }
@@ -98,21 +98,21 @@ func (r *systemRepository) GetSystemStatus() (*model.AgentStatus, error) {
 		Status:      "online",
 		ThreadCount: runtime.NumGoroutine(),
 		Metrics: map[string]interface{}{
-			"memory_alloc":    memStats.Alloc,
-			"memory_total":    memStats.TotalAlloc,
-			"memory_sys":      memStats.Sys,
-			"gc_cycles":       memStats.NumGC,
-			"goroutines":      runtime.NumGoroutine(),
-			"last_updated":    time.Now().Format(time.RFC3339),
+			"memory_alloc": memStats.Alloc,
+			"memory_total": memStats.TotalAlloc,
+			"memory_sys":   memStats.Sys,
+			"gc_cycles":    memStats.NumGC,
+			"goroutines":   runtime.NumGoroutine(),
+			"last_updated": time.Now().Format(time.RFC3339),
 		},
 		LastUpdated: time.Now(),
 	}
 
 	r.config.Logger.DEBUG(config.ALSSUCC, "System status retrieved successfully", map[string]interface{}{
-"status":      status.Status,
-"goroutines":  status.ThreadCount,
-"memory_mb":   memStats.Alloc / 1024 / 1024,
-})
+		"status":     status.Status,
+		"goroutines": status.ThreadCount,
+		"memory_mb":  memStats.Alloc / 1024 / 1024,
+	})
 
 	return status, nil
 }
@@ -120,20 +120,20 @@ func (r *systemRepository) GetSystemStatus() (*model.AgentStatus, error) {
 // GetRegistrationInfo retrieves stored registration information
 func (r *systemRepository) GetRegistrationInfo() (*model.Agent, error) {
 	r.config.Logger.DEBUG(config.ALSGREG, "Getting registration information from local storage", map[string]interface{}{
-"file_path": r.dataFilePath,
-})
+		"file_path": r.dataFilePath,
+	})
 
 	if _, err := os.Stat(r.dataFilePath); os.IsNotExist(err) {
 		r.config.Logger.DEBUG(config.ALSSUCC, "No registration data found", map[string]interface{}{
-"file_path": r.dataFilePath,
-})
+			"file_path": r.dataFilePath,
+		})
 		return nil, nil
 	}
 
 	data, err := ioutil.ReadFile(r.dataFilePath)
 	if err != nil {
 		r.config.Logger.ERROR(config.ALSERR, "Failed to read registration data", map[string]interface{}{
-"error": err.Error(),
+			"error":     err.Error(),
 			"file_path": r.dataFilePath,
 		})
 		return nil, err
@@ -142,7 +142,7 @@ func (r *systemRepository) GetRegistrationInfo() (*model.Agent, error) {
 	var agent model.Agent
 	if err := json.Unmarshal(data, &agent); err != nil {
 		r.config.Logger.ERROR(config.ALSERR, "Failed to unmarshal registration data", map[string]interface{}{
-"error": err.Error(),
+			"error": err.Error(),
 		})
 		return nil, err
 	}
@@ -166,23 +166,23 @@ func (r *systemRepository) StoreRegistrationInfo(agent *model.Agent) error {
 	data, err := json.MarshalIndent(agent, "", "  ")
 	if err != nil {
 		r.config.Logger.ERROR(config.ALSERR, "Failed to marshal registration data", map[string]interface{}{
-"error": err.Error(),
+			"error": err.Error(),
 		})
 		return err
 	}
 
 	if err := ioutil.WriteFile(r.dataFilePath, data, 0644); err != nil {
 		r.config.Logger.ERROR(config.ALSERR, "Failed to write registration data", map[string]interface{}{
-"error": err.Error(),
+			"error":     err.Error(),
 			"file_path": r.dataFilePath,
 		})
 		return err
 	}
 
 	r.config.Logger.DEBUG(config.ALSSUCC, "Registration information stored successfully", map[string]interface{}{
-"agent_uuid": agent.UUID,
-"file_path":  r.dataFilePath,
-})
+		"agent_uuid": agent.UUID,
+		"file_path":  r.dataFilePath,
+	})
 
 	return nil
 }

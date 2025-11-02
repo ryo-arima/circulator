@@ -189,7 +189,7 @@ func (r *PulsarRepository) ConsumeAgentReports(ctx context.Context, handler func
 
 			if err := handler(&report); err != nil {
 				r.config.Logger.ERROR(config.SRPERR, "Failed to handle agent report", map[string]interface{}{
-					"error":      err.Error(),
+					"error":       err.Error(),
 					"report_type": report.Type,
 					"report_id":   report.ID,
 					"agent_id":    report.AgentID,

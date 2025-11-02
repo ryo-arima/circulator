@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 	"github.com/ryo-arima/circulator/pkg/config"
 	"github.com/ryo-arima/circulator/pkg/entity/model"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 // MySQLRepository handles direct MySQL database operations
@@ -221,7 +221,7 @@ func (r *MySQLRepository) Close() error {
 	if err != nil {
 		return err
 	}
-	
+
 	if err := sqlDB.Close(); err != nil {
 		r.config.Logger.ERROR(config.SRMERR, "Failed to close database connection", map[string]interface{}{
 			"error": err.Error(),

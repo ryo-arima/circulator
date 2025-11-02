@@ -33,11 +33,11 @@ type AgentInfoResponse struct {
 
 // AgentRegistrationResponse represents a response for agent registration operations
 type AgentRegistrationResponse struct {
-	Code         string            `json:"code"`
-	Message      string            `json:"message"`
+	Code             string            `json:"code"`
+	Message          string            `json:"message"`
 	RegistrationInfo map[string]string `json:"registration_info,omitempty"`
-	Data    *AgentInfo  `json:"data,omitempty"`
-	List    []AgentInfo `json:"list,omitempty"`
+	Data             *AgentInfo        `json:"data,omitempty"`
+	List             []AgentInfo       `json:"list,omitempty"`
 }
 
 type AgentInfo struct {
