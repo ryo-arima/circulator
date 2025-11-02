@@ -4,6 +4,7 @@ graph TB
             CLI[CLI Client]
             WEB[Web Client]
             API_CLIENT[API Client]
+            CLIENT_REPO[Client Repository]
         end
 
         subgraph "Server Layer"
@@ -75,18 +76,19 @@ graph TB
     WEB --> REST
     API_CLIENT --> GRPC
     
-    %% Server Internal Communication (Instance 1)
-    REST --> SC1
-    GRPC --> SC1
-    SC1 --> SU1
-    SU1 --> SR1
-    SR1 --> MYSQL
+    %% Client Internal Communication
+    CLI --> CLIENT_REPO
+    WEB --> CLIENT_REPO
+    API_CLIENT --> CLIENT_REPO
     
-    %% Server Internal Communication (Instance 2)
+    %% API Gateway to Server Controllers
+    REST --> SC1
     REST --> SC2
+    GRPC --> SC1
     GRPC --> SC2
-    SC2 --> SU2
-    SU2 --> SR2
+    
+    %% Server Internal Communication (Database Access)
+    SR1 --> MYSQL
     SR2 --> MYSQL
     
     %% Agent to Server HTTP Communication
@@ -112,37 +114,37 @@ graph TB
     AUN --> ARN
     ARN --> FSN
     
-    %% Server to Pulsar Communication (Publishing)
-    SR1 -.->|Publish Commands| PULSAR
-    SR2 -.->|Publish Commands| PULSAR
+    %% Server Repository to Pulsar to REST API Server Controller
+    SR1 -.->|Publish Events| PULSAR
+    SR2 -.->|Publish Events| PULSAR
+    PULSAR -.->|Server Events| REST
     
-    %% Pulsar to Server Communication (Consuming)
-    PULSAR -.->|Agent Reports| SR1
-    PULSAR -.->|Agent Events| SR2
+    %% Server Controller to UseCase to Repository Pulsar Chain
+    SC1 --> SU1
+    SU1 --> SR1
+    SC2 --> SU2
+    SU2 --> SR2
     
-    %% Agent to Pulsar Communication (Publishing)
-    AR1 -.->|Publish Reports| PULSAR
-    AR2 -.->|Publish Reports| PULSAR
-    ARN -.->|Publish Reports| PULSAR
+    %% Agent Repository to Pulsar to gRPC Server Agent Controller
+    AR1 -.->|Agent Reports| PULSAR
+    AR2 -.->|Agent Reports| PULSAR
+    ARN -.->|Agent Reports| PULSAR
+    PULSAR -.->|Agent Data| GRPC
     
-    %% Pulsar to Agent Communication (Consuming)
-    PULSAR -.->|Server Commands| AR1
-    PULSAR -.->|Server Commands| AR2
-    PULSAR -.->|Server Commands| ARN
+    %% Client Repository to Pulsar to REST API
+    CLIENT_REPO -.->|Client Events| PULSAR
+    PULSAR -.->|System Status| REST
+    
+    %% Additional Pulsar Communication Patterns
+    PULSAR -.->|Commands| AR1
+    PULSAR -.->|Commands| AR2
+    PULSAR -.->|Commands| ARN
     
     %% Server to Server Communication via Pulsar
-    SR1 -.->|Inter-Server Events| PULSAR
-    SR2 -.->|Inter-Server Events| PULSAR
-    PULSAR -.->|Inter-Server Events| SR1
-    PULSAR -.->|Inter-Server Events| SR2
-    
-    %% Agent to Agent Communication via Pulsar
-    AR1 -.->|Agent Coordination| PULSAR
-    AR2 -.->|Agent Coordination| PULSAR
-    ARN -.->|Agent Coordination| PULSAR
-    PULSAR -.->|Agent Coordination| AR1
-    PULSAR -.->|Agent Coordination| AR2
-    PULSAR -.->|Agent Coordination| ARN
+    SR1 -.->|Inter-Server Sync| PULSAR
+    SR2 -.->|Inter-Server Sync| PULSAR
+    PULSAR -.->|Server Coordination| SR1
+    PULSAR -.->|Server Coordination| SR2
     
     %% Configuration and Logging
     MCP --> LOG
@@ -164,7 +166,7 @@ graph TB
     classDef infraLayer fill:#fff3e0,stroke:#e65100,stroke-width:2px
     classDef configLayer fill:#fce4ec,stroke:#880e4f,stroke-width:2px
 
-    class CLI,WEB,API_CLIENT clientLayer
+    class CLI,WEB,API_CLIENT,CLIENT_REPO clientLayer
     class REST,GRPC,SC1,SU1,SR1,SC2,SU2,SR2 serverLayer
     class A1,A2,AN,AC1,AU1,AR1,AC2,AU2,AR2,ACN,AUN,ARN agentLayer
     class PULSAR,TOPICS,MYSQL,TABLES,FS1,FS2,FSN infraLayer
