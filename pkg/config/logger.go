@@ -289,6 +289,103 @@ var (
 	ABRAS  = MCode{"AB-RA-S", "Agent registration completed"}
 )
 
+// Client Repository Server codes
+var (
+	CRSLOGIN = MCode{"CRS-LOGIN", "Client server login attempt"}
+	CRSGA    = MCode{"CRS-GA", "Client getting all agents from server"}
+	CRSCA    = MCode{"CRS-CA", "Client creating agent on server"}
+	CRSSUCC  = MCode{"CRS-SUCC", "Client server operation successful"}
+	CRSERR   = MCode{"CRS-ERR", "Client server operation error"}
+)
+
+// Client Repository Pulsar codes
+var (
+	CRPINIT  = MCode{"CRP-INIT", "Client Pulsar repository initialized"}
+	CRPPUB   = MCode{"CRP-PUB", "Client publishing to Pulsar"}
+	CRPCONS  = MCode{"CRP-CONS", "Client consuming from Pulsar"}
+	CRPREC   = MCode{"CRP-REC", "Client received Pulsar message"}
+	CRPSTOP  = MCode{"CRP-STOP", "Client stopping Pulsar consumption"}
+	CRPCLOSE = MCode{"CRP-CLOSE", "Client Pulsar repository closed"}
+	CRPSUCC  = MCode{"CRP-SUCC", "Client Pulsar operation successful"}
+	CRPERR   = MCode{"CRP-ERR", "Client Pulsar operation error"}
+)
+
+// Server Repository MySQL codes
+var (
+	SRMCONN     = MCode{"SRM-CONN", "Server MySQL connection"}
+	SRMINIT     = MCode{"SRM-INIT", "Server MySQL repository initialized"}
+	SRMMIG      = MCode{"SRM-MIG", "Server MySQL migrations"}
+	SRMGA       = MCode{"SRM-GA", "Server MySQL get all agents"}
+	SRMGAU      = MCode{"SRM-GAU", "Server MySQL get agent by UUID"}
+	SRMCA       = MCode{"SRM-CA", "Server MySQL create agent"}
+	SRMUA       = MCode{"SRM-UA", "Server MySQL update agent"}
+	SRMDA       = MCode{"SRM-DA", "Server MySQL delete agent"}
+	SRMCOUNT    = MCode{"SRM-COUNT", "Server MySQL count agents"}
+	SRMCLOSE    = MCode{"SRM-CLOSE", "Server MySQL repository closed"}
+	SRMNOTFOUND = MCode{"SRM-NOTFOUND", "Server MySQL record not found"}
+	SRMSUCC     = MCode{"SRM-SUCC", "Server MySQL operation successful"}
+	SRMERR      = MCode{"SRM-ERR", "Server MySQL operation error"}
+)
+
+// Server Repository Pulsar codes
+var (
+	SRPINIT  = MCode{"SRP-INIT", "Server Pulsar repository initialized"}
+	SRPPUB   = MCode{"SRP-PUB", "Server publishing to Pulsar"}
+	SRPNOT   = MCode{"SRP-NOT", "Server publishing notification"}
+	SRPCONS  = MCode{"SRP-CONS", "Server consuming from Pulsar"}
+	SRPREC   = MCode{"SRP-REC", "Server received Pulsar message"}
+	SRPSTOP  = MCode{"SRP-STOP", "Server stopping Pulsar consumption"}
+	SRPCLOSE = MCode{"SRP-CLOSE", "Server Pulsar repository closed"}
+	SRPSUCC  = MCode{"SRP-SUCC", "Server Pulsar operation successful"}
+	SRPERR   = MCode{"SRP-ERR", "Server Pulsar operation error"}
+)
+
+// Agent Repository API Server codes
+var (
+	ARSINIT   = MCode{"ARS-INIT", "Agent Server API repository initialized"}
+	ARSLOGIN  = MCode{"ARS-LOGIN", "Agent attempting server login"}
+	ARSGINFO  = MCode{"ARS-GINFO", "Agent getting info from server"}
+	ARSSPREP  = MCode{"ARS-SPREP", "Agent sending status report"}
+	ARSGREG   = MCode{"ARS-GREG", "Agent getting registration from server"}
+	ARSSREG   = MCode{"ARS-SREG", "Agent sending registration to server"}
+	ARSSUCC   = MCode{"ARS-SUCC", "Agent Server API operation successful"}
+	ARSERR    = MCode{"ARS-ERR", "Agent Server API operation error"}
+)
+
+// Agent Repository Pulsar Producer codes
+var (
+	ARPPINIT  = MCode{"ARPP-INIT", "Agent Pulsar producer initialized"}
+	ARPPUB    = MCode{"ARPP-PUB", "Agent publishing to Pulsar"}
+	ARPREP    = MCode{"ARPP-REP", "Agent publishing report"}
+	ARPNOT    = MCode{"ARPP-NOT", "Agent publishing notification"}
+	ARPCLOSE  = MCode{"ARPP-CLOSE", "Agent Pulsar producer closed"}
+	ARPSUCC   = MCode{"ARPP-SUCC", "Agent Pulsar producer operation successful"}
+	ARPERR    = MCode{"ARPP-ERR", "Agent Pulsar producer operation error"}
+)
+
+// Agent Repository Pulsar Consumer codes
+var (
+	ARCCINIT  = MCode{"ARCC-INIT", "Agent Pulsar consumer initialized"}
+	ARCCONS   = MCode{"ARCC-CONS", "Agent consuming from Pulsar"}
+	ARCREC    = MCode{"ARCC-REC", "Agent received Pulsar message"}
+	ARCPROC   = MCode{"ARCC-PROC", "Agent processing Pulsar message"}
+	ARCSTOP   = MCode{"ARCC-STOP", "Agent stopping Pulsar consumption"}
+	ARCCLOSE  = MCode{"ARCC-CLOSE", "Agent Pulsar consumer closed"}
+	ARCSUCC   = MCode{"ARCC-SUCC", "Agent Pulsar consumer operation successful"}
+	ARCERR    = MCode{"ARCC-ERR", "Agent Pulsar consumer operation error"}
+)
+
+// Agent Repository Local System codes
+var (
+	ALSINIT   = MCode{"ALS-INIT", "Agent local system repository initialized"}
+	ALSGINFO  = MCode{"ALS-GINFO", "Agent getting system info"}
+	ALSGSTAT  = MCode{"ALS-GSTAT", "Agent getting system status"}
+	ALSGREG   = MCode{"ALS-GREG", "Agent getting registration info"}
+	ALSSREG   = MCode{"ALS-SREG", "Agent storing registration info"}
+	ALSSUCC   = MCode{"ALS-SUCC", "Agent local system operation successful"}
+	ALSERR    = MCode{"ALS-ERR", "Agent local system operation error"}
+)
+
 // LogLevel represents the log level
 type LogLevel int
 

@@ -49,6 +49,14 @@ func (AgentInfo) TableName() string {
 	return "agent_info"
 }
 
+// AgentStatus represents runtime agent status information
+type AgentStatus struct {
+	Status      string                 `json:"status"`
+	ThreadCount int                    `json:"thread_count"`
+	Metrics     map[string]interface{} `json:"metrics"`
+	LastUpdated time.Time              `json:"last_updated"`
+}
+
 // SystemInfo represents persistent system information stored in MySQL
 type SystemInfo struct {
 	ID           uint       `gorm:"primarykey" json:"id"`

@@ -80,4 +80,3 @@ This project follows a clean architecture with:
 - **Use Cases**: Business logic layer  
 - **Repositories**: Data access layer
 - **Models**: Domain entities and database models
-# circulator

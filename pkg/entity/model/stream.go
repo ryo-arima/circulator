@@ -16,6 +16,44 @@ type IncomingStreamData struct {
 	RawPayload []byte    `json:"raw_payload"`
 }
 
+// Command represents a command message for Pulsar
+type Command struct {
+	ID        string                 `json:"id"`
+	Type      string                 `json:"type"`
+	Target    string                 `json:"target"`    // "agent", "server", "client"
+	Action    string                 `json:"action"`
+	Payload   map[string]interface{} `json:"payload"`
+	Timestamp time.Time              `json:"timestamp"`
+}
+
+// Notification represents a notification message for Pulsar
+type Notification struct {
+	ID        string    `json:"id"`
+	AgentID   string    `json:"agent_id"`
+	Type      string    `json:"type"`
+	Message   string    `json:"message"`
+	Timestamp time.Time `json:"timestamp"`
+}
+
+// ServerEvent represents events published by the server
+type ServerEvent struct {
+	ID        string    `json:"id"`
+	Type      string    `json:"type"` // "agent_registered", "agent_updated", "system_status"
+	AgentID   string    `json:"agent_id,omitempty"`
+	Data      string    `json:"data"`
+	Timestamp time.Time `json:"timestamp"`
+}
+
+// AgentReport represents reports sent by agents to the server
+type AgentReport struct {
+	ID        string    `json:"id"`
+	AgentID   string    `json:"agent_id"`
+	Type      string    `json:"type"` // "status", "metrics", "error", "heartbeat"
+	Status    string    `json:"status"`
+	Data      string    `json:"data"`
+	Timestamp time.Time `json:"timestamp"`
+}
+
 // ProcessedStreamData represents processed stream data for Pulsar streaming
 type ProcessedStreamData struct {
 	UUID           string    `json:"uuid"`

@@ -30,6 +30,25 @@ type AgentUpdateRequest struct {
 	Description    *string         `json:"description,omitempty"`
 }
 
+// AgentRegistrationRequest for agent registration
+type AgentRegistrationRequest struct {
+	AgentID      string            `json:"agent_id"`
+	Hostname     string            `json:"hostname"`
+	IpAddress    string            `json:"ip_address"`
+	Port         int               `json:"port"`
+	Version      string            `json:"version"`
+	Capabilities []string          `json:"capabilities"`
+	Metadata     map[string]string `json:"metadata"`
+}
+
+// AgentStatusReportRequest for agent status reporting
+type AgentStatusReportRequest struct {
+	AgentID     string            `json:"agent_id"`
+	Status      string            `json:"status"` // "online", "offline", "busy", "idle"
+	Metrics     map[string]string `json:"metrics"`
+	LastUpdated time.Time         `json:"last_updated"`
+}
+
 // AgentInfoRequest represents a request for agent information operations
 type AgentInfoRequest struct {
 	UUID           string            `json:"uuid,omitempty"`

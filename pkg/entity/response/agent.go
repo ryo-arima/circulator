@@ -26,8 +26,16 @@ type Agent struct {
 
 // AgentInfoResponse represents a response for agent information operations
 type AgentInfoResponse struct {
-	Code    string      `json:"code"`
-	Message string      `json:"message"`
+	Code    string     `json:"code"`
+	Message string     `json:"message"`
+	Data    *AgentInfo `json:"data,omitempty"`
+}
+
+// AgentRegistrationResponse represents a response for agent registration operations
+type AgentRegistrationResponse struct {
+	Code         string            `json:"code"`
+	Message      string            `json:"message"`
+	RegistrationInfo map[string]string `json:"registration_info,omitempty"`
 	Data    *AgentInfo  `json:"data,omitempty"`
 	List    []AgentInfo `json:"list,omitempty"`
 }
